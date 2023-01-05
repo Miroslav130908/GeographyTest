@@ -73,6 +73,10 @@ def rus1d():
         rus1check()
 
 
+    def rus1end():
+        saysth('Конец', 'Игра уже кончилась!', 2)
+
+
     def rus1check():
         global rus1rans
         global rus1ans
@@ -103,12 +107,18 @@ def rus1d():
             if rus1ans == rus1cors[indrus1[irus1]]:
                 saysth('Конец!', 'Верно, ты прошёл тест!', 2)
                 rus1rans += 1
-                rus1result = 'Твой результат: ' + str(rus1rans) + ' / 15'
+                rus1result = 'Твой результат: ' + str(rus1rans) + ' / 15, Оценка: ' + str(rus1rans // 3)
                 rus1que['text'] = rus1result
             else:
                 saysth('Конец!', 'Неверно, но ты прошёл тест!', 2)
-                rus1result = 'Твой результат: ' + str(rus1rans) + ' / 15'
+                rus1result = 'Твой результат: ' + str(rus1rans) + ' / 15, Оценка: ' + str(rus1rans // 3)
                 rus1que['text'] = rus1result
+            rus1ans1['command'] = rus1end
+            rus1ans2['command'] = rus1end
+            rus1ans3['command'] = rus1end
+            rus1ans4['command'] = rus1end
+            rus1ans5['command'] = rus1end
+            rus1ans6['command'] = rus1end
 
 
     rus1 = Toplevel()

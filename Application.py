@@ -2,6 +2,7 @@ from tkinter import *
 import time
 import random
 import json
+from PIL import Image, ImageTk
 
 
 rans = 0
@@ -40,6 +41,7 @@ def saysth(title, text, ind):
 
     ssslabel.grid(row=0)
     sssbutton.grid(row=1)
+
 
 
 def rootd(i):
@@ -116,6 +118,7 @@ def d():
     rus = Toplevel()
     rus.title('Тест по рельефу')
     rus.geometry('1400x1000')
+    # rus.attributes('-zoomed', True)
 
 
     qus = Frame(rus)
@@ -146,10 +149,13 @@ def d():
 root = Tk()
 root.title('Сборник тестов по географии')
 root.geometry('1400x800')
+# root.attributes('-zoomed', True)
+
 
 rootbg = PhotoImage(file='Backgroundroot.png')
 rootbglab = Label(root, image=rootbg)
 rootbglab.place(x=0, y=0, relwidth=1, relheight=1)
+
 
 but = Button(root, text='Горы и равнины России', command=rootd(1), bg='black', fg='white', font='Arial, 30', width=25, height=1)
 but.grid(row=0, column=0)

@@ -4,17 +4,20 @@ import random
 import json
 
 
-rus1rans = 0
-irus1 = 0
-rus1ques = ['Какой цифрой на карте обозначен Буреинский хребет?', 'Какой цифрой на карте обозначены Уральские горы?', 'Какой цифрой на карте обозначено плато Путорана?', 'Какой цифрой на карте обозначена Среднерусская возвышенность?', 'Какой цифрой на карте обозначена Западно-Сибирская равнина?', 'Какой цифрой на карте обозначен хребет Джугджур?', 'Какой цифрой на карте обозначено Патомское нагорье?', 'Какой цифрой на карте обозначен Верхоянский хребет?', 'Какой цифрой на карте обозначено Алданское нагорье?', 'Какой цифрой на карте обозначены Кавказские горы?', 'Какой цифрой на карте обозначен хребет Черского?', 'Какой цифрой на карте обозначен Восточный Саян?', 'Какой цифрой на карте обозначены Хибины?', 'Какой цифрой на карте обозначено Чукотское нагорье?', 'Какой цифрой на карте обозначено Становое нагорье?', 'Какой цифрой на карте обозначены горы Бырранга?', 'Какой цифрой на карте обозначен Яблоновый хребет?', 'Какой цифрой на карте обозначен Сихотэ-Алинь?', 'Какой цифрой на карте обозначен Алтай?', 'Какой цифрой на карте обозначен Срединный хребет?']
-rus1ans1s = ['11', '12', '10', '4', '12', '3', '14', '4', '18', '3', '10', '6', '5', '5', '10', '4', '6', '7', '5', '13']
-rus1ans2s = ['9', '5', '19', '10', '17', '20', '19', '18', '12', '14', '19', '7', '11', '12', '13', '11', '17', '8', '7', '19']
-rus1ans3s = ['1', '4', '13', '19', '10', '7', '2', '9', '19', '12', '4', '15', '18', '16', '20', '14', '2', '12', '14', '8']
-rus1ans4s = ['19', '3', '15', '8', '7', '1', '17', '16', '15', '7', '3', '17', '8', '8', '8', '9', '10', '4', '11', '16']
-rus1ans5s = ['2', '9', '2', '16', '13', '11', '18', '3', '10', '5', '20', '1', '20', '20', '15', '5', '7', '5', '9', '4']
-rus1ans6s = ['3', '10', '17', '12', '19', '5', '4', '11', '5', '19', '8', '9', '14', '6', '16', '6', '19', '1', '18', '2']
-rus1cors = [5, 4, 3, 2, 1, 3, 4, 3, 1, 5, 2, 3, 4, 5, 6, 2, 1, 6, 3, 5]
-imagename = 'MapMountainsAndPlains1.png'
+rans = 0
+i = 0
+
+ans = -1
+data = None
+imagename = None
+
+
+# with open('data/test1.json') as file:
+#     tmp = json.load(file)
+
+
+# with open('data/test1.json', 'w') as file:
+#     json.dump(res, file, sort_keys=False, indent=4, ensure_ascii=False)
 
 
 def saysth(title, text, ind):
@@ -39,133 +42,105 @@ def saysth(title, text, ind):
     sssbutton.grid(row=1)
 
 
-def rus1d():
-    global rus1rans
-    global irus1
-    rus1ans = 0
-    indrus1 = [x for x in range(20)]
-    random.shuffle(indrus1)
-    indrus1 = indrus1[:-5]
-
-    def rus1butcc(i):
-        def rus1butc():
-            global rus1ans
-            rus1ans = i
-            rus1check()
-        return rus1butc
+def rootd(i):
+    def rootdi():
+        global data, imagename
+        with open(f'data/test{i}.json') as file:
+            data = json.load(file)
+        imagename = f'data/test{i}.png'
+        d()
+    return rootdi
 
 
-    def rus1end():
+def d():
+    global rans
+    global i
+    ind = [x for x in range(20)]
+    random.shuffle(ind)
+    ind = ind[:-5]
+
+    def butcc(i):
+        def butc():
+            global ans
+            ans = i
+            check()
+        return butc
+
+
+    def end():
         saysth('Конец', 'Тест уже закончился!', 2)
 
 
-    def rus1check():
-        global rus1rans
-        global rus1ans
-        global irus1
-        if irus1 < len(indrus1) - 1:
-            if rus1ans == rus1cors[indrus1[irus1]]:
-                irus1 += 1
-                rus1que['text'] = rus1ques[indrus1[irus1]]
-                rus1ans1['text'] = rus1ans1s[indrus1[irus1]]
-                rus1ans2['text'] = rus1ans2s[indrus1[irus1]]
-                rus1ans3['text'] = rus1ans3s[indrus1[irus1]]
-                rus1ans4['text'] = rus1ans4s[indrus1[irus1]]
-                rus1ans5['text'] = rus1ans5s[indrus1[irus1]]
-                rus1ans6['text'] = rus1ans6s[indrus1[irus1]]
-                rus1rans += 1
-                rus1ind['text'] = 'Верно!'
-                rus1ind['bg'] = 'green'
-                rus1rind['text'] = 'Верно: ' + str(rus1rans) + ' / ' + str(irus1)
+    def check():
+        global rans
+        global ans
+        global i
+        if i < len(ind) - 1:
+            if ans == data[ind[i]]['cors']:
+                rans += 1
+                cind['text'] = 'Верно!'
+                cind['bg'] = 'green'
             else:
-                irus1 += 1
-                rus1que['text'] = rus1ques[indrus1[irus1]]
-                rus1ans1['text'] = rus1ans1s[indrus1[irus1]]
-                rus1ans2['text'] = rus1ans2s[indrus1[irus1]]
-                rus1ans3['text'] = rus1ans3s[indrus1[irus1]]
-                rus1ans4['text'] = rus1ans4s[indrus1[irus1]]
-                rus1ans5['text'] = rus1ans5s[indrus1[irus1]]
-                rus1ans6['text'] = rus1ans6s[indrus1[irus1]]
-                rus1ind['text'] = 'Неверно!'
-                rus1ind['bg'] = 'red'
-                rus1rind['text'] = 'Верно: ' + str(rus1rans) + ' / ' + str(irus1)
+                cind['text'] = 'Неверно!'
+                cind['bg'] = 'red'
+            i += 1
+            que['text'] = data[ind[i]]['ques']
+            for j in range(6):
+                buts[j]['text'] = data[ind[i]]['anss'][j]
+            rind['text'] = f'Верно: {rans} / {i}'
         else:
-            if rus1ans == rus1cors[indrus1[irus1]]:
-                rus1rans += 1
-                if rus1rans > 12:
-                    oc = rus1rans - 10
-                if rus1rans == 12:
-                    oc = 3
-                if rus1rans < 12 and rus1rans > 9:
-                    oc = 2
-                if rus1rans <= 9:
-                    oc = 1
-                rus1result = 'Твой результат: ' + str(rus1rans) + ' / 15, Оценка: ' + str(oc)
-                rus1que['text'] = rus1result
-                rus1ind['text'] = 'Верно! Конец!'
-                rus1ind['bg'] = '#9190d6'
-                rus1ind['fg'] = 'black'
-                rus1rind['text'] = 'Верно: ' + str(rus1rans) + ' / ' + str(irus1 + 1)
+            if ans == data[ind[i]]['cors']:
+                rans += 1
+                cind['text'] = 'Верно! Конец!'
+                cind['bg'] = '#9190d6'
             else:
-                if rus1rans > 12:
-                    oc = rus1rans - 10
-                if rus1rans == 12:
-                    oc = 3
-                if rus1rans < 12 and rus1rans > 9:
-                    oc = 2
-                if rus1rans <= 9:
-                    oc = 1
-                rus1result = 'Твой результат: ' + str(rus1rans) + ' / 15, Оценка: ' + str(oc)
-                rus1que['text'] = rus1result
-                rus1ind['text'] = 'Неверно! Конец!'
-                rus1ind['bg'] = 'yellow'
-                rus1ind['fg'] = 'black'
-                rus1rind['text'] = 'Верно: ' + str(rus1rans) + ' / ' + str(irus1 + 1)
-            rus1ans1['command'] = rus1end
-            rus1ans2['command'] = rus1end
-            rus1ans3['command'] = rus1end
-            rus1ans4['command'] = rus1end
-            rus1ans5['command'] = rus1end
-            rus1ans6['command'] = rus1end
-            irus1 = 0
-            rus1rans = 0
+                cind['text'] = 'Неверно! Конец!'
+                cind['bg'] = 'yellow'
+            if rans > 12:
+                oc = rans - 10
+            if rans == 12:
+                oc = 3
+            if rans < 12 and rans > 9:
+                oc = 2
+            if rans <= 9:
+                oc = 1
+            que['text'] = f'Твой результат: {rans} / 15, Оценка: {oc}'
+            cind['fg'] = 'black'
+            rind['text'] = f'Верно: {rans} / {i + 1}'
+            for k in range(6):
+                buts[k]['command'] = end
+            i = 0
+            rans = 0
 
 
-    rus1 = Toplevel()
-    rus1.title('Тест по рельефу')
-    rus1.geometry('1400x1000')
+    rus = Toplevel()
+    rus.title('Тест по рельефу')
+    rus.geometry('1400x1000')
 
 
-    rus1qus = Frame(rus1)
-    rus1qus['bg'] = '#87e88a'
-    rus1pic = Frame(rus1)
-    rus1que = Label(rus1qus, text=rus1ques[indrus1[0]], bg='black', fg='white', font='Arial, 25', width=67, height=1)
-    rus1ans1 = Button(rus1qus, text=rus1ans1s[indrus1[0]], command=rus1butcc(1), bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans2 = Button(rus1qus, text=rus1ans2s[indrus1[0]], command=rus1butcc(2), bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans3 = Button(rus1qus, text=rus1ans3s[indrus1[0]], command=rus1butcc(3), bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans4 = Button(rus1qus, text=rus1ans4s[indrus1[0]], command=rus1butcc(4), bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans5 = Button(rus1qus, text=rus1ans5s[indrus1[0]], command=rus1butcc(5), bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans6 = Button(rus1qus, text=rus1ans6s[indrus1[0]], command=rus1butcc(6), bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ind = Label(rus1qus, text='Выберите ответ', bg='black', fg='white', font='Arial, 25', width=15, height=1)
-    rus1rind = Label(rus1qus, text='Верно: 0 / 0', bg='yellow', fg='black', font='Arial, 25', width=15, height=1)
-    rus1can = Canvas(rus1pic, height=884, width=1400)
+    qus = Frame(rus)
+    qus['bg'] = '#87e88a'
+    pic = Frame(rus)
+    que = Label(qus, text=data[ind[0]]['ques'], bg='black', fg='white', font='Arial, 25', width=67, height=1)
+    buts = []
+    for j in range(6):
+        buts.append(Button(qus, text=data[ind[0]]['anss'][j], command=butcc(j), bg='black', fg='white', font='Arial, 30', width=10, height=1))
+    cind = Label(qus, text='Выберите ответ', bg='black', fg='white', font='Arial, 25', width=15, height=1)
+    rind = Label(qus, text='Верно: 0 / 0', bg='yellow', fg='black', font='Arial, 25', width=15, height=1)
+    can = Canvas(pic, height=884, width=1400)
 
-    rus1map = PhotoImage(file=imagename)
-    rus1can.create_image(0, 0, anchor=NW, image=rus1map)
+    map = PhotoImage(file=imagename)
+    can.create_image(0, 0, anchor=NW, image=map)
 
-    rus1qus.grid(row=0)
-    rus1pic.grid(row=1)
-    rus1que.grid(row=0, columnspan=4, column=0)
-    rus1ans1.grid(row=1, column=0)
-    rus1ans2.grid(row=1, column=1)
-    rus1ans3.grid(row=1, column=2)
-    rus1rind.grid(row=1, column=3)
-    rus1ans4.grid(row=2, column=0)
-    rus1ans5.grid(row=2, column=1)
-    rus1ans6.grid(row=2, column=2)
-    rus1can.grid(row=2, column=3)
-    rus1ind.grid(row=2, column=3)
-    rus1.mainloop()
+    qus.grid(row=0)
+    pic.grid(row=1)
+    que.grid(row=0, columnspan=4, column=0)
+    for j in range(6):
+        buts[j].grid(row=(1 + j // 3), column=(j % 3))
+    rind.grid(row=1, column=3)
+    can.grid(row=2, column=3)
+    cind.grid(row=2, column=3)
+    rus.mainloop()
 
 
 root = Tk()
@@ -176,6 +151,6 @@ rootbg = PhotoImage(file='Backgroundroot.png')
 rootbglab = Label(root, image=rootbg)
 rootbglab.place(x=0, y=0, relwidth=1, relheight=1)
 
-rus1but = Button(root, text='Горы и равнины России', command=rus1d, bg='black', fg='white', font='Arial, 30', width=25, height=1)
-rus1but.grid(row=0, column=0)
+but = Button(root, text='Горы и равнины России', command=rootd(1), bg='black', fg='white', font='Arial, 30', width=25, height=1)
+but.grid(row=0, column=0)
 root.mainloop()

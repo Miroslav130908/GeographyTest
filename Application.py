@@ -1,6 +1,7 @@
 from tkinter import *
 import time
 import random
+import json
 
 
 rus1rans = 0
@@ -13,6 +14,7 @@ rus1ans4s = ['19', '3', '15', '8', '7', '1', '17', '16', '15', '7', '3', '17', '
 rus1ans5s = ['2', '9', '2', '16', '13', '11', '18', '3', '10', '5', '20', '1', '20', '20', '15', '5', '7', '5', '9', '4']
 rus1ans6s = ['3', '10', '17', '12', '19', '5', '4', '11', '5', '19', '8', '9', '14', '6', '16', '6', '19', '1', '18', '2']
 rus1cors = [5, 4, 3, 2, 1, 3, 4, 3, 1, 5, 2, 3, 4, 5, 6, 2, 1, 6, 3, 5]
+imagename = 'MapMountainsAndPlains1.png'
 
 
 def saysth(title, text, ind):
@@ -45,35 +47,12 @@ def rus1d():
     random.shuffle(indrus1)
     indrus1 = indrus1[:-5]
 
-    def rus1but1c():
-        global rus1ans
-        rus1ans = 1
-        rus1check()
-
-    def rus1but2c():
-        global rus1ans
-        rus1ans = 2
-        rus1check()
-
-    def rus1but3c():
-        global rus1ans
-        rus1ans = 3
-        rus1check()
-
-    def rus1but4c():
-        global rus1ans
-        rus1ans = 4
-        rus1check()
-
-    def rus1but5c():
-        global rus1ans
-        rus1ans = 5
-        rus1check()
-
-    def rus1but6c():
-        global rus1ans
-        rus1ans = 6
-        rus1check()
+    def rus1butcc(i):
+        def rus1butc():
+            global rus1ans
+            rus1ans = i
+            rus1check()
+        return rus1butc
 
 
     def rus1end():
@@ -148,6 +127,8 @@ def rus1d():
             rus1ans4['command'] = rus1end
             rus1ans5['command'] = rus1end
             rus1ans6['command'] = rus1end
+            irus1 = 0
+            rus1rans = 0
 
 
     rus1 = Toplevel()
@@ -159,17 +140,17 @@ def rus1d():
     rus1qus['bg'] = '#87e88a'
     rus1pic = Frame(rus1)
     rus1que = Label(rus1qus, text=rus1ques[indrus1[0]], bg='black', fg='white', font='Arial, 25', width=67, height=1)
-    rus1ans1 = Button(rus1qus, text=rus1ans1s[indrus1[0]], command=rus1but1c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans2 = Button(rus1qus, text=rus1ans2s[indrus1[0]], command=rus1but2c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans3 = Button(rus1qus, text=rus1ans3s[indrus1[0]], command=rus1but3c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans4 = Button(rus1qus, text=rus1ans4s[indrus1[0]], command=rus1but4c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans5 = Button(rus1qus, text=rus1ans5s[indrus1[0]], command=rus1but5c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
-    rus1ans6 = Button(rus1qus, text=rus1ans6s[indrus1[0]], command=rus1but6c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
+    rus1ans1 = Button(rus1qus, text=rus1ans1s[indrus1[0]], command=rus1butcc(1), bg='black', fg='white', font='Arial, 30', width=10, height=1)
+    rus1ans2 = Button(rus1qus, text=rus1ans2s[indrus1[0]], command=rus1butcc(2), bg='black', fg='white', font='Arial, 30', width=10, height=1)
+    rus1ans3 = Button(rus1qus, text=rus1ans3s[indrus1[0]], command=rus1butcc(3), bg='black', fg='white', font='Arial, 30', width=10, height=1)
+    rus1ans4 = Button(rus1qus, text=rus1ans4s[indrus1[0]], command=rus1butcc(4), bg='black', fg='white', font='Arial, 30', width=10, height=1)
+    rus1ans5 = Button(rus1qus, text=rus1ans5s[indrus1[0]], command=rus1butcc(5), bg='black', fg='white', font='Arial, 30', width=10, height=1)
+    rus1ans6 = Button(rus1qus, text=rus1ans6s[indrus1[0]], command=rus1butcc(6), bg='black', fg='white', font='Arial, 30', width=10, height=1)
     rus1ind = Label(rus1qus, text='Выберите ответ', bg='black', fg='white', font='Arial, 25', width=15, height=1)
     rus1rind = Label(rus1qus, text='Верно: 0 / 0', bg='yellow', fg='black', font='Arial, 25', width=15, height=1)
     rus1can = Canvas(rus1pic, height=884, width=1400)
 
-    rus1map = PhotoImage(file='MapMountainsAndPlains1.png')
+    rus1map = PhotoImage(file=imagename)
     rus1can.create_image(0, 0, anchor=NW, image=rus1map)
 
     rus1qus.grid(row=0)

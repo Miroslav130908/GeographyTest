@@ -1,7 +1,7 @@
 from tkinter import *
 import time
 import random
-from tkinter.messagebox import *
+
 
 rus1rans = 0
 irus1 = 0
@@ -16,18 +16,21 @@ rus1cors = [5, 4, 3, 2, 1, 3, 4, 3, 1, 5, 2, 3, 4, 5, 6, 2, 1, 6, 3, 5]
 
 
 def saysth(title, text, ind):
+    bg = 'white'
     def closesss():
         sss.destroy()
 
-    sss = Toplevel()
+    sss = Tk()
     sss.title(title)
+    sss.eval('tk::PlaceWindow . center')
+    sss['bg'] = '#e0ded7'
     if ind == 0:
-        sss['bg'] = 'red'
+        bg = 'red'
     if ind == 1:
-        sss['bg'] = 'green'
+        bg = 'green'
     if ind == 2:
-        sss['bg'] = 'blue'
-    ssslabel = Label(sss, text=text, font='Arial, 20', height=1, bg='#e0ded7')
+        bg = '#9190d6'
+    ssslabel = Label(sss, text=text, font='Arial, 20', height=1, width=20, bg=bg)
     sssbutton = Button(sss, text='  ОК  ', font='Arial, 20', height=1, bg='#e0ded7', command=closesss)
 
     ssslabel.grid(row=0)
@@ -84,7 +87,6 @@ def rus1d():
         if irus1 < len(indrus1) - 1:
             if rus1ans == rus1cors[indrus1[irus1]]:
                 irus1 += 1
-                saysth('Верно!', 'Следующий вопрос!', 1)
                 rus1que['text'] = rus1ques[indrus1[irus1]]
                 rus1ans1['text'] = rus1ans1s[indrus1[irus1]]
                 rus1ans2['text'] = rus1ans2s[indrus1[irus1]]
@@ -93,9 +95,11 @@ def rus1d():
                 rus1ans5['text'] = rus1ans5s[indrus1[irus1]]
                 rus1ans6['text'] = rus1ans6s[indrus1[irus1]]
                 rus1rans += 1
+                rus1ind['text'] = 'Верно!'
+                rus1ind['bg'] = 'green'
+                rus1rind['text'] = 'Верно: ' + str(rus1rans) + ' / ' + str(irus1)
             else:
                 irus1 += 1
-                saysth('Неверно!', 'Следующий вопрос...', 0)
                 rus1que['text'] = rus1ques[indrus1[irus1]]
                 rus1ans1['text'] = rus1ans1s[indrus1[irus1]]
                 rus1ans2['text'] = rus1ans2s[indrus1[irus1]]
@@ -103,9 +107,11 @@ def rus1d():
                 rus1ans4['text'] = rus1ans4s[indrus1[irus1]]
                 rus1ans5['text'] = rus1ans5s[indrus1[irus1]]
                 rus1ans6['text'] = rus1ans6s[indrus1[irus1]]
+                rus1ind['text'] = 'Неверно!'
+                rus1ind['bg'] = 'red'
+                rus1rind['text'] = 'Верно: ' + str(rus1rans) + ' / ' + str(irus1)
         else:
             if rus1ans == rus1cors[indrus1[irus1]]:
-                saysth('Конец!', 'Верно, ты прошёл тест!', 2)
                 rus1rans += 1
                 if rus1rans > 12:
                     oc = rus1rans - 10
@@ -117,8 +123,11 @@ def rus1d():
                     oc = 1
                 rus1result = 'Твой результат: ' + str(rus1rans) + ' / 15, Оценка: ' + str(oc)
                 rus1que['text'] = rus1result
+                rus1ind['text'] = 'Верно! Конец!'
+                rus1ind['bg'] = '#9190d6'
+                rus1ind['fg'] = 'black'
+                rus1rind['text'] = 'Верно: ' + str(rus1rans) + ' / ' + str(irus1 + 1)
             else:
-                saysth('Конец!', 'Неверно, но ты прошёл тест!', 2)
                 if rus1rans > 12:
                     oc = rus1rans - 10
                 if rus1rans == 12:
@@ -129,6 +138,10 @@ def rus1d():
                     oc = 1
                 rus1result = 'Твой результат: ' + str(rus1rans) + ' / 15, Оценка: ' + str(oc)
                 rus1que['text'] = rus1result
+                rus1ind['text'] = 'Неверно! Конец!'
+                rus1ind['bg'] = 'yellow'
+                rus1ind['fg'] = 'black'
+                rus1rind['text'] = 'Верно: ' + str(rus1rans) + ' / ' + str(irus1 + 1)
             rus1ans1['command'] = rus1end
             rus1ans2['command'] = rus1end
             rus1ans3['command'] = rus1end
@@ -143,6 +156,7 @@ def rus1d():
 
 
     rus1qus = Frame(rus1)
+    rus1qus['bg'] = '#87e88a'
     rus1pic = Frame(rus1)
     rus1que = Label(rus1qus, text=rus1ques[indrus1[0]], bg='black', fg='white', font='Arial, 25', width=67, height=1)
     rus1ans1 = Button(rus1qus, text=rus1ans1s[indrus1[0]], command=rus1but1c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
@@ -151,6 +165,8 @@ def rus1d():
     rus1ans4 = Button(rus1qus, text=rus1ans4s[indrus1[0]], command=rus1but4c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
     rus1ans5 = Button(rus1qus, text=rus1ans5s[indrus1[0]], command=rus1but5c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
     rus1ans6 = Button(rus1qus, text=rus1ans6s[indrus1[0]], command=rus1but6c, bg='black', fg='white', font='Arial, 30', width=10, height=1)
+    rus1ind = Label(rus1qus, text='Выберите ответ', bg='black', fg='white', font='Arial, 25', width=15, height=1)
+    rus1rind = Label(rus1qus, text='Верно: 0 / 0', bg='yellow', fg='black', font='Arial, 25', width=15, height=1)
     rus1can = Canvas(rus1pic, height=884, width=1400)
 
     rus1map = PhotoImage(file='MapMountainsAndPlains1.png')
@@ -158,14 +174,16 @@ def rus1d():
 
     rus1qus.grid(row=0)
     rus1pic.grid(row=1)
-    rus1que.grid(row=0, columnspan=3, column=0)
+    rus1que.grid(row=0, columnspan=4, column=0)
     rus1ans1.grid(row=1, column=0)
     rus1ans2.grid(row=1, column=1)
     rus1ans3.grid(row=1, column=2)
+    rus1rind.grid(row=1, column=3)
     rus1ans4.grid(row=2, column=0)
     rus1ans5.grid(row=2, column=1)
     rus1ans6.grid(row=2, column=2)
-    rus1can.grid(row=0, column=0)
+    rus1can.grid(row=2, column=3)
+    rus1ind.grid(row=2, column=3)
     rus1.mainloop()
 
 

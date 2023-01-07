@@ -47,7 +47,7 @@ def saysth(title, text, ind):
 def rootd(i):
     def rootdi():
         global data, imagename
-        with open(f'data/test{i}.json') as file:
+        with open(f'data/test{i}.json', encoding='utf-8') as file:
             data = json.load(file)
         imagename = f'data/test{i}.png'
         d()
@@ -156,9 +156,9 @@ def d():
     for j in range(6):
         buts[j].place(x=(tmx * 6), y=(tmy * 2 + j * 2 * tmy + tmy / 4), width=tmx, height=(tmy + tmy / 2))
     que.place(x=0, y=0, width=(tmx * 7), height=tmy)
-    rind.place(x=0, y=tmy, width=(tmx * 1.25), height=tmy)
-    cind.place(x=(tmx * 5.75), y=tmy, width=(tmx * 1.25), height=tmy)
-    megarind.place(x=(tmx * 1.25), y=tmy, width=(tmx * 4.5), height=tmy)
+    rind.place(x=0, y=tmy, width=(tmx * 1.5), height=tmy)
+    cind.place(x=(tmx * 6), y=tmy, width=(tmx * 1), height=tmy)
+    megarind.place(x=(tmx * 1.5), y=tmy, width=(tmx * 4.5), height=tmy)
     slice.place(x=0, y=0, width=(sx / 30), height=(sy / 30))
     
     

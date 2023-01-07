@@ -71,6 +71,11 @@ def d():
 
     def end():
         saysth('Конец', 'Тест уже закончился!', 2)
+    
+    
+        
+    def sliceandice():
+        rus.destroy()
 
 
     def check():
@@ -82,9 +87,11 @@ def d():
                 rans += 1
                 cind['text'] = 'Верно!'
                 cind['bg'] = 'green'
+                megarind.create_oval((15 * smx) / 30 * (2 * i + 1) - smy / 4, smy / 2 + smy / 4, (15 * smx) / 30 * (2 * i + 1) + smy / 4, smy / 2 - smy / 4, fill='green', outline='green')
             else:
                 cind['text'] = 'Неверно!'
                 cind['bg'] = 'red'
+                megarind.create_oval((15 * smx) / 30 * (2 * i + 1) - smy / 4, smy / 2 + smy / 4, (15 * smx) / 30 * (2 * i + 1) + smy / 4, smy / 2 - smy / 4, fill='red', outline='red')
             i += 1
             que['text'] = data[ind[i]]['ques']
             for j in range(6):
@@ -93,11 +100,13 @@ def d():
         else:
             if ans == data[ind[i]]['cors']:
                 rans += 1
-                cind['text'] = 'Верно! Конец!'
+                cind['text'] = 'Верно!'
                 cind['bg'] = '#9190d6'
+                megarind.create_oval((15 * smx) / 30 * (2 * i + 1) - smy / 4, smy / 2 + smy / 4, (15 * smx) / 30 * (2 * i + 1) + smy / 4, smy / 2 - smy / 4, fill='green', outline='green')
             else:
-                cind['text'] = 'Неверно! Конец!'
+                cind['text'] = 'Неверно!'
                 cind['bg'] = 'yellow'
+                megarind.create_oval((15 * smx) / 30 * (2 * i + 1) - smy / 4, smy / 2 + smy / 4, (15 * smx) / 30 * (2 * i + 1) + smy / 4, smy / 2 - smy / 4, fill='red', outline='red')
             if rans > 12:
                 oc = rans - 10
             if rans == 12:
@@ -117,32 +126,40 @@ def d():
 
     rus = Toplevel()
     rus.title('Тест по рельефу')
-    rus.geometry('1400x1000')
-    # rus.attributes('-zoomed', True)
-
-
-    qus = Frame(rus)
-    qus['bg'] = '#87e88a'
-    pic = Frame(rus)
-    que = Label(qus, text=data[ind[0]]['ques'], bg='black', fg='white', font='Arial, 25', width=67, height=1)
+    # rus.geometry('1400x1000')
+    rus.attributes('-fullscreen', True)
+    tfont = f'Arial, {35 if sx >= 2500 and sy >= 1200 else 25 if sx >= 1400 and sy >= 800 else 15}'
+    tmy = sy / 14
+    tmx = sx / 7
+    
+    que = Label(rus, text=data[ind[0]]['ques'], bg='black', fg='white', font=tfont, width=67, height=1)
     buts = []
     for j in range(6):
-        buts.append(Button(qus, text=data[ind[0]]['anss'][j], command=butcc(j), bg='black', fg='white', font='Arial, 30', width=10, height=1))
-    cind = Label(qus, text='Выберите ответ', bg='black', fg='white', font='Arial, 25', width=15, height=1)
-    rind = Label(qus, text='Верно: 0 / 0', bg='yellow', fg='black', font='Arial, 25', width=15, height=1)
-    can = Canvas(pic, height=884, width=1400)
+        buts.append(Button(rus, text=data[ind[0]]['anss'][j], command=butcc(j), bg='black', fg='white', font=rfont, width=10, height=1))
+    cind = Label(rus, text='-------', bg='black', fg='white', font=tfont, width=15, height=1)
+    rind = Label(rus, text='Верно: 0 / 0', bg='yellow', fg='black', font=tfont, width=15, height=1)
+    megarind = Canvas(rus)
+    smx = 0.3 * tmx
+    smy = tmy
+    for j in range(15):
+        megarind.create_oval((15 * smx) / 30 * (2 * j + 1) - smy / 4, smy / 2 + smy / 4, (15 * smx) / 30 * (2 * j + 1) + smy / 4, smy / 2 - smy / 4, fill='#7f8584', outline='#7f8584')
+    slice = Button(rus, text='←', bg='black', fg='#5694db', activeforeground='black', activebackground='#5694db', font=rfont, command=sliceandice)
 
-    map = PhotoImage(file=imagename)
-    can.create_image(0, 0, anchor=NW, image=map)
 
-    qus.grid(row=0)
-    pic.grid(row=1)
-    que.grid(row=0, columnspan=4, column=0)
+    mapx = Image.open(imagename)
+    mapx = mapx.resize(((sx - sx // 7), (sy - sy // 7)), Image.ANTIALIAS)
+    map = ImageTk.PhotoImage(mapx)
+    maplab = Label(rus, image=map)
+    
+    
+    maplab.place(x=0, y=(sy / 7))
     for j in range(6):
-        buts[j].grid(row=(1 + j // 3), column=(j % 3))
-    rind.grid(row=1, column=3)
-    can.grid(row=2, column=3)
-    cind.grid(row=2, column=3)
+        buts[j].place(x=(tmx * 6), y=(tmy * 2 + j * 2 * tmy + tmy / 4), width=tmx, height=(tmy + tmy / 2))
+    que.place(x=0, y=0, width=(tmx * 7), height=tmy)
+    rind.place(x=0, y=tmy, width=(tmx * 1.25), height=tmy)
+    cind.place(x=(tmx * 5.75), y=tmy, width=(tmx * 1.25), height=tmy)
+    megarind.place(x=(tmx * 1.25), y=tmy, width=(tmx * 4.5), height=tmy)
+    slice.place(x=0, y=0, width=(sx / 30), height=(sy / 30))
     
     
     rus.mainloop()
@@ -150,6 +167,7 @@ def d():
 
 def dashanddestroy():
     root.destroy()
+
 
 
 root = Tk()
@@ -160,24 +178,20 @@ sx = root.winfo_screenwidth()
 sy = root.winfo_screenheight()
 
 
-
-pixelVirtual = PhotoImage(width=1, height=1)
 rootbgx = Image.open("Backgroundroot.png")
 rootbgx = rootbgx.resize((sx, sy), Image.ANTIALIAS)
 rootbg = ImageTk.PhotoImage(rootbgx)
 rootbglab = Label(root, image=rootbg)
 rootbglab.place(x=0, y=0, relwidth=1, relheight=1)
 
-print(sx, sy, rootbgx.size, pixelVirtual.width())
 rmx = sx // 16
 rmy = sy // 24
 rfont = f'Arial, {40 if sx >= 2500 and sy >= 1200 else 30 if sx >= 1400 and sy >= 800 else 20}'
 for j in range(10):
-    but = Button(root, text='Горы и равнины России', command=rootd(1), bg='black', fg='white', font=rfont, 
-           compound="c", image=pixelVirtual, borderwidth=0)
+    but = Button(root, text='Горы и равнины России', command=rootd(1), bg='black', fg='white', font=rfont)
     but.place(x=(rmx + (j // 5) * rmx * 8), y=(5 * rmy + (j % 5) * rmy * 4), width=(6 * rmx), height=(2 * rmy))
-rootname = Label(root, text='Сборник тестов по географии за 8 класс. Выберите тест:', bg='black', fg='white', font=rfont)
+rootname = Label(root, text='Сборник тестов по географии. Выберите тест:', bg='black', fg='white', font=rfont)
 dash = Button(root, text='×', bg='black', fg='red', activeforeground='black', activebackground='red', font=rfont, command=dashanddestroy)
 rootname.place(x=rmx, y=rmy, width=(14 * rmx), height=(2 * rmy))
-dash.place(x=(sx - sx // 30), y=0,  width=(sx // 30), height=(sy // 30))
+dash.place(x=(sx - sx / 30), y=0,  width=(sx / 30), height=(sy / 30))
 root.mainloop()

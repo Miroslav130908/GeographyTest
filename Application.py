@@ -143,20 +143,41 @@ def d():
     rind.grid(row=1, column=3)
     can.grid(row=2, column=3)
     cind.grid(row=2, column=3)
+    
+    
     rus.mainloop()
+
+
+def dashanddestroy():
+    root.destroy()
 
 
 root = Tk()
 root.title('Сборник тестов по географии')
-root.geometry('1400x800')
-# root.attributes('-zoomed', True)
+# root.geometry('1400x800')
+root.attributes('-fullscreen', True)
+sx = root.winfo_screenwidth()
+sy = root.winfo_screenheight()
 
 
-rootbg = PhotoImage(file='Backgroundroot.png')
+
+pixelVirtual = PhotoImage(width=1, height=1)
+rootbgx = Image.open("Backgroundroot.png")
+rootbgx = rootbgx.resize((sx, sy), Image.ANTIALIAS)
+rootbg = ImageTk.PhotoImage(rootbgx)
 rootbglab = Label(root, image=rootbg)
 rootbglab.place(x=0, y=0, relwidth=1, relheight=1)
 
-
-but = Button(root, text='Горы и равнины России', command=rootd(1), bg='black', fg='white', font='Arial, 30', width=25, height=1)
-but.grid(row=0, column=0)
+print(sx, sy, rootbgx.size, pixelVirtual.width())
+rmx = sx // 16
+rmy = sy // 24
+rfont = f'Arial, {40 if sx >= 2500 and sy >= 1200 else 30 if sx >= 1400 and sy >= 800 else 20}'
+for j in range(10):
+    but = Button(root, text='Горы и равнины России', command=rootd(1), bg='black', fg='white', font=rfont, 
+           compound="c", image=pixelVirtual, borderwidth=0)
+    but.place(x=(rmx + (j // 5) * rmx * 8), y=(5 * rmy + (j % 5) * rmy * 4), width=(6 * rmx), height=(2 * rmy))
+rootname = Label(root, text='Сборник тестов по географии за 8 класс. Выберите тест:', bg='black', fg='white', font=rfont)
+dash = Button(root, text='×', bg='black', fg='red', activeforeground='black', activebackground='red', font=rfont, command=dashanddestroy)
+rootname.place(x=rmx, y=rmy, width=(14 * rmx), height=(2 * rmy))
+dash.place(x=(sx - sx // 30), y=0,  width=(sx // 30), height=(sy // 30))
 root.mainloop()

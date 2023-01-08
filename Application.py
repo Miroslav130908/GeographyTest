@@ -7,7 +7,7 @@ from PIL import Image, ImageTk
 
 rans = 0
 i = 0
-
+fontind = None
 ans = -1
 data = None
 imagename = None
@@ -44,12 +44,13 @@ def saysth(title, text, ind):
 
 
 
-def rootd(i):
+def rootd(f):
     def rootdi():
-        global data, imagename
-        with open(f'data/test{i}.json', encoding='utf-8') as file:
+        global data, imagename, fontind
+        with open(f'data/test{f}.json', encoding='utf-8') as file:
             data = json.load(file)
-        imagename = f'data/test{i}.png'
+            fontind = f
+        imagename = f'data/test{f}.png'
         d()
     return rootdi
 
@@ -94,7 +95,7 @@ def d():
                 megarind.create_oval((15 * smx) / 30 * (2 * i + 1) - smy / 4, smy / 2 + smy / 4, (15 * smx) / 30 * (2 * i + 1) + smy / 4, smy / 2 - smy / 4, fill='red', outline='red')
             i += 1
             que['text'] = data[ind[i]]['ques']
-            for j in range(6):
+            for j in range(len(data[0]['anss'])):
                 buts[j]['text'] = data[ind[i]]['anss'][j]
             rind['text'] = f'Верно: {rans} / {i}'
         else:
@@ -118,7 +119,7 @@ def d():
             que['text'] = f'Твой результат: {rans} / 15, Оценка: {oc}'
             cind['fg'] = 'black'
             rind['text'] = f'Верно: {rans} / {i + 1}'
-            for k in range(6):
+            for k in range(len(data[0]['anss'])):
                 buts[k]['command'] = end
             i = 0
             rans = 0
@@ -128,14 +129,17 @@ def d():
     rus.title('Тест по рельефу')
     # rus.geometry('1400x1000')
     rus.attributes('-fullscreen', True)
-    tfont = f'Arial, {35 if sx >= 2500 and sy >= 1200 else 25 if sx >= 1400 and sy >= 800 else 15}'
+    if fontind == 1:
+        tfont = f'Arial, {35 if sx >= 2500 and sy >= 1200 else 25 if sx >= 1400 and sy >= 800 else 15}'
+    if fontind == 2:
+        tfont = f'Arial, {25 if sx >= 2500 and sy >= 1200 else 15 if sx >= 1400 and sy >= 800 else 10}'
     tmy = sy / 14
     tmx = sx / 7
     
     que = Label(rus, text=data[ind[0]]['ques'], bg='black', fg='white', font=tfont, width=67, height=1)
     buts = []
-    for j in range(6):
-        buts.append(Button(rus, text=data[ind[0]]['anss'][j], command=butcc(j), bg='black', fg='white', font=rfont, width=10, height=1))
+    for j in range(len(data[0]['anss'])):
+        buts.append(Button(rus, text=data[ind[0]]['anss'][j], command=butcc(j), bg='black', fg='white', font=tfont, width=10, height=1, wraplength=(tmx - 10)))
     cind = Label(rus, text='-------', bg='black', fg='white', font=tfont, width=15, height=1)
     rind = Label(rus, text='Верно: 0 / 0', bg='yellow', fg='black', font=tfont, width=15, height=1)
     megarind = Canvas(rus)
@@ -153,7 +157,7 @@ def d():
     
     
     maplab.place(x=0, y=(sy / 7))
-    for j in range(6):
+    for j in range(len(data[0]['anss'])):
         buts[j].place(x=(tmx * 6), y=(tmy * 2 + j * 2 * tmy + tmy / 4), width=tmx, height=(tmy + tmy / 2))
     que.place(x=0, y=0, width=(tmx * 7), height=tmy)
     rind.place(x=0, y=tmy, width=(tmx * 1.5), height=tmy)
@@ -187,8 +191,11 @@ rootbglab.place(x=0, y=0, relwidth=1, relheight=1)
 rmx = sx // 16
 rmy = sy // 24
 rfont = f'Arial, {40 if sx >= 2500 and sy >= 1200 else 30 if sx >= 1400 and sy >= 800 else 20}'
+names = ['Горы и равнины России', 'Горы и равнины России 2', 'Горы и равнины России', 'Горы и равнины России 2',
+         'Горы и равнины России', 'Горы и равнины России 2', 'Горы и равнины России', 'Горы и равнины России 2',
+         'Горы и равнины России', 'Горы и равнины России 2']
 for j in range(10):
-    but = Button(root, text='Горы и равнины России', command=rootd(1), bg='black', fg='white', font=rfont)
+    but = Button(root, text=names[j], command=rootd((j % 2) + 1), bg='black', fg='white', font=rfont)
     but.place(x=(rmx + (j // 5) * rmx * 8), y=(5 * rmy + (j % 5) * rmy * 4), width=(6 * rmx), height=(2 * rmy))
 rootname = Label(root, text='Сборник тестов по географии. Выберите тест:', bg='black', fg='white', font=rfont)
 dash = Button(root, text='×', bg='black', fg='red', activeforeground='black', activebackground='red', font=rfont, command=dashanddestroy)

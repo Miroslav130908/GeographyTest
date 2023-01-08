@@ -76,6 +76,9 @@ def d():
     
         
     def sliceandice():
+        global i, rans
+        i = 0
+        rans = 0
         rus.destroy()
 
 

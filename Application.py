@@ -130,9 +130,9 @@ def d():
 
     rus = Toplevel()
     rus.title('Тест по рельефу')
-    # rus.geometry('1400x1000')
+    # rus.geometry('1400x1000')tf
     rus.attributes('-fullscreen', True)
-    if fontind == 1:
+    if fontind == 1 or fontind == 3:
         tfont = f'Arial, {35 if sx >= 2500 and sy >= 1200 else 25 if sx >= 1400 and sy >= 800 else 15}'
     if fontind == 2:
         tfont = f'Arial, {25 if sx >= 2500 and sy >= 1200 else 15 if sx >= 1400 and sy >= 800 else 10}'
@@ -142,7 +142,7 @@ def d():
     que = Label(rus, text=data[ind[0]]['ques'], bg='black', fg='white', font=tfont, width=67, height=1)
     buts = []
     for j in range(len(data[0]['anss'])):
-        buts.append(Button(rus, text=data[ind[0]]['anss'][j], command=butcc(j), bg='black', fg='white', font=tfont, width=10, height=1, wraplength=(tmx - 10)))
+        buts.append(Button(rus, text=data[ind[0]]['anss'][j], command=butcc(j), bg='black', fg='white', font=tfont, wraplength=(tmx - 10)))
     cind = Label(rus, text='-------', bg='black', fg='white', font=tfont, width=15, height=1)
     rind = Label(rus, text='Верно: 0 / 0', bg='yellow', fg='black', font=tfont, width=15, height=1)
     megarind = Canvas(rus)
@@ -194,11 +194,11 @@ rootbglab.place(x=0, y=0, relwidth=1, relheight=1)
 rmx = sx // 16
 rmy = sy // 24
 rfont = f'Arial, {40 if sx >= 2500 and sy >= 1200 else 30 if sx >= 1400 and sy >= 800 else 20}'
-names = ['Горы и равнины России', 'Горы и равнины России 2', 'Горы и равнины России', 'Горы и равнины России 2',
-         'Горы и равнины России', 'Горы и равнины России 2', 'Горы и равнины России', 'Горы и равнины России 2',
-         'Горы и равнины России', 'Горы и равнины России 2']
+names = ['Горы и равнины России I', 'Горы и равнины России II', 'Водные ресурсы России I', 'Горы и равнины России I',
+         'Горы и равнины России II', 'Водные ресурсы России I', 'Горы и равнины России I', 'Горы и равнины России II',
+         'Водные ресурсы России I', 'Горы и равнины России I']
 for j in range(10):
-    but = Button(root, text=names[j], command=rootd((j % 2) + 1), bg='black', fg='white', font=rfont)
+    but = Button(root, text=names[j], command=rootd((j % 3) + 1), bg='black', fg='white', font=rfont)
     but.place(x=(rmx + (j // 5) * rmx * 8), y=(5 * rmy + (j % 5) * rmy * 4), width=(6 * rmx), height=(2 * rmy))
 rootname = Label(root, text='Сборник тестов по географии. Выберите тест:', bg='black', fg='white', font=rfont)
 dash = Button(root, text='×', bg='black', fg='red', activeforeground='black', activebackground='red', font=rfont, command=dashanddestroy)

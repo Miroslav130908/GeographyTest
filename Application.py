@@ -133,7 +133,7 @@ def d():
     # rus.geometry('1400x1000')tf
     rus.attributes('-fullscreen', True)
     
-    if fontind == 1 or fontind == 3 or fontind == 5:
+    if fontind == 1 or fontind == 3 or fontind == 5 or fontind == 6:
         tfont = f'Arial, {35 if sx >= 2500 and sy >= 1200 else 25 if sx >= 1400 and sy >= 800 else 15}'
     if fontind == 2 or fontind == 4:
         tfont = f'Arial, {25 if sx >= 2500 and sy >= 1200 else 15 if sx >= 1400 and sy >= 800 else 10}'
@@ -199,10 +199,10 @@ rmx = sx // 16
 rmy = sy // 24
 rfont = f'Arial, {40 if sx >= 2500 and sy >= 1200 else 30 if sx >= 1400 and sy >= 800 else 20}'
 names = ['Горы и равнины России I', 'Горы и равнины России II', 'Моря, заливы, проливы РФ', 'Острова и полуострова РФ',
-         'Реки России', 'Горы и равнины России I', 'Горы и равнины России II', 'Моря, заливы, проливы РФ',
-         'Острова и полуострова РФ', 'Реки России']
+         'Реки России', 'Озера и губы России', '', '',
+         '', '']
 for j in range(10):
-    but = Button(root, text=names[j], command=rootd((j % 5) + 1), bg='black', fg='white', font=rfont)
+    but = Button(root, text=names[j], command=rootd((j % 6) + 1), bg='black', fg='white', font=rfont)
     but.place(x=(rmx + (j // 5) * rmx * 8), y=(5 * rmy + (j % 5) * rmy * 4), width=(6 * rmx), height=(2 * rmy))
 rootname = Label(root, text='Сборник тестов по географии. Выберите тест:', bg='black', fg='white', font=rfont)
 dash = Button(root, text='×', bg='black', fg='red', activeforeground='black', activebackground='red', font=rfont, command=dashanddestroy)

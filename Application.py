@@ -135,7 +135,7 @@ def d():
     
     if fontind == 1 or fontind == 3 or fontind == 5 or fontind == 6:
         tfont = f'Arial, {35 if sx >= 2500 and sy >= 1200 else 25 if sx >= 1400 and sy >= 800 else 15}'
-    if fontind == 2 or fontind == 4:
+    if fontind == 2 or fontind == 4 or fontind == 7:
         tfont = f'Arial, {25 if sx >= 2500 and sy >= 1200 else 15 if sx >= 1400 and sy >= 800 else 10}'
     else:
         tfont = f'Arial, {30 if sx >= 2500 and sy >= 1200 else 20 if sx >= 1400 and sy >= 800 else 13}'
@@ -199,10 +199,10 @@ rmx = sx // 16
 rmy = sy // 24
 rfont = f'Arial, {40 if sx >= 2500 and sy >= 1200 else 30 if sx >= 1400 and sy >= 800 else 20}'
 names = ['Горы и равнины России I', 'Горы и равнины России II', 'Моря, заливы, проливы РФ', 'Острова и полуострова РФ',
-         'Реки России', 'Озера и губы России', '', '',
+         'Реки России', 'Озера и губы России', 'Реки России II', '',
          '', '']
 for j in range(10):
-    but = Button(root, text=names[j], command=rootd((j % 6) + 1), bg='black', fg='white', font=rfont)
+    but = Button(root, text=names[j], command=rootd((j % 7) + 1), bg='black', fg='white', font=rfont)
     but.place(x=(rmx + (j // 5) * rmx * 8), y=(5 * rmy + (j % 5) * rmy * 4), width=(6 * rmx), height=(2 * rmy))
 rootname = Label(root, text='Сборник тестов по географии. Выберите тест:', bg='black', fg='white', font=rfont)
 dash = Button(root, text='×', bg='black', fg='red', activeforeground='black', activebackground='red', font=rfont, command=dashanddestroy)

@@ -190,7 +190,7 @@ sy = root.winfo_screenheight()
 
 
 rootbgx = Image.open("Backgroundroot.png")
-rootbgx = rootbgx.resize((sx, sy), Image.ANTIALIAS)
+rootbgx = rootbgx.resize((sx, sy), Image.LANCZOS)
 rootbg = ImageTk.PhotoImage(rootbgx)
 rootbglab = Label(root, image=rootbg)
 rootbglab.place(x=0, y=0, relwidth=1, relheight=1)
